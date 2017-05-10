@@ -1,0 +1,471 @@
+@name LINQ lib
+
+# Skip/Take Array
+function array skip(This:array, Number:number){
+    I = 1
+    while(I<Number){
+        This:shift()
+        I++
+    }
+    return This
+}
+function array take(This:array, Number:number){
+    I = This:count()
+    while(I>Number){
+        This:pop()
+        I--
+    }
+    return This
+}
+
+# Skip/Take Table
+function table skip(This:table, Number:number){
+    I = 1
+    while(I<Number){
+        This:shift()
+        I++
+    }
+    return This
+}
+function table take(This:table, Number:number){
+    I = This:count()
+    while(I>Number){
+        This:pop()
+        I--
+    }
+    return This
+}
+
+# Range Array
+function array range(This:array, Start:number, Finish:number){
+    This:skip(Start)
+    This:take(Finish-Start)
+    return This
+}
+
+# Range Table
+function table range(This:table, Start:number, Finish:number){
+    This:skip(Start)
+    This:take(Finish-Start)
+    return This
+}
+
+# Where Array
+function array whereNumber(This:array, IComparer:string){
+    local ToReturn = array()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,number])[number]){
+            ToReturn:pushNumber(This[I,number])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function array whereString(This:array, IComparer:string){
+    local ToReturn = array()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,string])[number]){
+            ToReturn:pushString(This[I,string])
+        }
+        I++
+    }
+    return ToReturn
+}
+function array whereEntity(This:array, IComparer:string){
+    local ToReturn = array()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,entity])[number]){
+            ToReturn:pushEntity(This[I,entity])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function array whereVector2(This:array, IComparer:string){
+    local ToReturn = array()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,vector2])[number]){
+            ToReturn:pushVector2(This[I,vector2])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function array whereVector(This:array, IComparer:string){
+    local ToReturn = array()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,vector4])[number]){
+            ToReturn:pushVector4(This[I,vector4])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function array whereVector4(This:array, IComparer:string){
+    local ToReturn = array()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,vector])[number]){
+            ToReturn:pushVector(This[I,vector])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function array whereAngle(This:array, IComparer:string){
+    local ToReturn = array()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,angle])[number]){
+            ToReturn:pushAngle(This[I,angle])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+# Where Table
+function table whereNumber(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,number])[number]){
+            ToReturn:pushNumber(This[I,number])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function table whereString(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,string])[number]){
+            ToReturn:pushString(This[I,string])
+        }
+        I++
+    }
+    return ToReturn
+}
+function table whereEntity(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,entity])[number]){
+            ToReturn:pushEntity(This[I,entity])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function table whereVector2(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,vector2])[number]){
+            ToReturn:pushVector2(This[I,vector2])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function table whereVector(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,vector4])[number]){
+            ToReturn:pushVector4(This[I,vector4])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function table whereVector4(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,vector])[number]){
+            ToReturn:pushVector(This[I,vector])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function table whereAngle(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,angle])[number]){
+            ToReturn:pushAngle(This[I,angle])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function table whereArray(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,array])[number]){
+            ToReturn:pushArray(This[I,array])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+function table whereTable(This:table, IComparer:string){
+    local ToReturn = table()
+    I = 1
+    while(I<=This:count()){
+        if(IComparer(This[I,table])[number]){
+            ToReturn:pushTable(This[I,table])
+        }
+        I++
+    }
+    return ToReturn
+}
+
+# IndexOf array
+function number indexOfNumber(This:array, Input:number){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,number] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfString(This:array, Input:string){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,string] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfEntity(This:array, Input:entity){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,entity] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfVector2(This:array, Input:vector2){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,vector2] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfVector(This:array, Input:vector){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,vector] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfVector4(This:array, Input:vector4){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,vector4] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfAngle(This:array, Input:angle){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,angle] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+# IndexOf Table
+function number indexOfNumber(This:table, Input:number){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,number] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfString(This:table, Input:string){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,string] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfEntity(This:table, Input:entity){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,entity] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfVector2(This:table, Input:vector2){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,vector2] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfVector(This:table, Input:vector){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,vector] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfVector4(This:table, Input:vector4){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,vector4] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+function number indexOfAngle(This:table, Input:angle){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,angle] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+# Arrays are not comparable but tables are
+#[
+function number indexOfArray(This:table, Input:array){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,array] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+]#
+
+function number indexOfTable(This:table, Input:table){
+    I = 1
+    while(I<=This:count()){
+        if(This[I,table] == Input){
+            return I
+        }
+        I++
+    }
+    return 0
+}
+
+## -- Default Comparers -- ##
+
+# Number
+function number isOdd(Input:number){
+    return !(Input%2)
+}
+
+function number isEven(Input:number){
+    return !(Input%2)
+}
+
+function number isSquare(Input:number){
+    return sqrt(Input) == round(sqrt(Input))
+}
+
+# String
+function number isUpper(Input:string){
+    return Input == Input:upper()
+}
+
+function number isLower(Input:string){
+    return Input == Input:upper()
+}
+
+# Entity
+function number isValid(Input:entity){
+    return Input:isValid()
+}
+
+function number isPlayer(Input:entity){
+    return Input:isPlayer()
+}
+
+function number isAlive(Input:entity){
+    return Input:isAlive()
+}
+
+#print("START")
+
+#A = table(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32,33,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50):whereNumber("isSquare")
+#printTable(A)
+
+#A = table("hey","ho","lets","go"):indexOfString("lets")
+#print(A)
+
+

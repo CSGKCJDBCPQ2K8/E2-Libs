@@ -1,0 +1,80 @@
+@name XTEA Crypto Lib
+@persist XTEA_ROUNDS XTEA_MAGIC
+
+## By Sneaky One
+
+XTEA_ROUNDS = 8
+XTEA_MAGIC = 2654435769
+
+# Base encrypt
+function table xTEA_encrypt(In:table, Key:table, Rounds){
+    local I1 = In[1,number]
+    local I2 = In[2,number]
+    local Delta = XTEA_MAGIC
+    local Sum = 0
+    
+    local I = 1
+    for(I = 1, I < Rounds){
+        I1 += (((I2<<4)^^(I2>>5) + I2)^^(Sum + Key[min(Sum, 3),number]))
+        Sum += Delta
+        I2 += (((I1<<4)^^(I1>>5) + I1)^^(Sum + Key[min((Sum>>11),3),number]))
+    }
+    
+    return table(I1, I2)
+}
+
+#Base Decrypt
+function table xTEA_decrypt(In:table, Key:table, Rounds){
+    local I1 = In[1,number]
+    local I2 = In[2,number]
+    local Delta = XTEA_MAGIC
+    local Sum = Delta
+    
+    local I = 1
+    for(I = 1, I < Rounds){
+        I2 -= (((I1<<4)^^(I1>>5) + I1)^^(Sum + Key[min((Sum>>11),3),number]))
+        Sum -= Delta
+        I1 -= (((I2<<4)^^(I2>>5) + I2)^^(Sum + Key[min(Sum, 3),number]))
+    }
+    
+    return table(I1, I2)
+}
+
+function table xTEA_EncryptString(Str:string, Key:table){
+    local Lets = Str:explode("")
+    
+    if(Lets:count()%2){
+        Lets:pushString("")
+    }
+    
+    local Out = table()
+    
+    local I = 1
+    while(I < Lets:count()){
+        local Res = xTEA_encrypt(table(toByte(Lets[I,string]),toByte(Lets[I+1,string])), Key, XTEA_ROUNDS)
+        
+        Out:pushNumber(Res[1,number])
+        Out:pushNumber(Res[2,number])
+        
+        I+= 2
+    }
+    print(Lets:count())
+    print(I)
+    return Out
+}
+
+function string xTEA_DecryptString(In:table, Key:table){
+
+    local Out = ""
+    
+    local I = 1
+    while(I < In:count()){
+        local Res = xTEA_decrypt(table(In[I,number],In[I+1,number]), Key, XTEA_ROUNDS)
+        
+        Out +=  toChar(Res[1,number]) + toChar(Res[2,number])
+        
+        I+=2
+    }
+
+    return Out
+}

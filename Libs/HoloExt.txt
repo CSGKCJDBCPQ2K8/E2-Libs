@@ -1,0 +1,80 @@
+@persist CurHoloIndex ToParentTo:entity BaseEnt:entity DefaultSymNum DefaultMat:string
+
+function holoLink(Index:number,A:entity,B:entity)
+{
+    holoPos(Index,A:pos() - (A:pos() - B:pos()) / 2)
+    holoAng(Index,(A:pos() - B:pos()):toAngle())
+    holoScale(Index,vec(B:pos():distance(A:pos())/12,0.5,0.5))
+}
+
+function number holoC(RelPos:vector, Scale:vector, RelAng:angle, Color:vector, Model:string){
+    CurHoloIndex++
+    holoCreate(CurHoloIndex, BaseEnt:toWorld(RelPos), Scale, BaseEnt:toWorld(RelAng), Color, Model)
+    holoMaterial(CurHoloIndex, DefaultMat)
+    holoParent(CurHoloIndex, ToParentTo)
+    return CurHoloIndex
+}
+
+function holoMat(Mat:string){
+    holoMaterial(CurHoloIndex,Mat)
+}
+
+function holoMakeSym(Index, Parent:entity, Number){
+    Pos = BaseEnt:toLocal(holoEntity(Index):pos()) # holoEntity(Index):pos() - BaseEnt:pos()  << THIS FUCKING CODE RIGHT HERE
+    Ang = holoEntity(Index):angles() - BaseEnt:angles()
+    
+    AngBetween = 360/Number
+    
+    I = 1
+    while(I<Number){
+        holoC(Pos:rotate(0,AngBetween*I,0),holoScale(Index),Ang+ang(0,AngBetween*I,0),holoEntity(Index):getColor(),holoEntity(Index):model())
+        holoMat(holoEntity(Index):getMaterial())
+        holoAlpha(CurHoloIndex,holoEntity(Index):getAlpha())
+        I++
+    }
+}
+
+function holoMakeSym(Index, Parent, Number){
+    holoMakeSym(Index, holoEntity(Parent), Number)
+}
+
+function holoMakeSym(){
+    holoMakeSym(CurHoloIndex, BaseEnt, DefaultSymNum)
+}
+
+function holoMakeMirror(Index, Parent:entity, Plane:string){
+    Pos = BaseEnt:toLocal(holoEntity(Index):pos()) # holoEntity(Index):pos() - BaseEnt:pos()  << THIS FUCKING CODE RIGHT HERE
+    Ang = BaseEnt:toLocal(holoEntity(Index):angles())
+    
+    switch(Plane){
+        case "x",
+            holoC(Pos:setX(-Pos:x()),holoScale(Index),ang(0,180,0)-Ang,holoEntity(Index):getColor(),holoEntity(Index):model())
+        break
+        
+        case "y",
+            holoC(Pos:setY(-Pos:y()),holoScale(Index),ang(180,180,180)-Ang,holoEntity(Index):getColor(),holoEntity(Index):model())
+        break
+        
+        case "z",
+            holoC(Pos:setY(-Pos:z()),holoScale(Index),ang(0,0,180)-Ang,holoEntity(Index):getColor(),holoEntity(Index):model())
+        break
+    }
+    holoMat(holoEntity(Index):getMaterial())
+    holoAlpha(CurHoloIndex,holoEntity(Index):getAlpha())
+}
+
+function holoMakeMirror(Index, Parent, Plane:string){
+    holoMakeMirror(Index, holoEntity(Parent), Plane)
+}
+
+function holoMakeMirror(Parent, Plane:string){
+    holoMakeMirror(CurHoloIndex, holoEntity(Parent), Plane)
+}
+
+function holoMakeMirror(Plane:string){
+    holoMakeMirror(CurHoloIndex, ToParentTo, Plane)
+}
+
+function holoMakeMirror(){
+    holoMakeMirror(CurHoloIndex, ToParentTo, "x")
+}
